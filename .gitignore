@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# misc
+.env
+**/tmp/**
 # Logs
 logs
 *.log
