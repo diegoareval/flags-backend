@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import * as fs from "fs";
-import {join} from "path";
+import * as fs from 'fs';
+import { join } from 'path';
 import shuffleArray from '../../common/helpers/shuffle-array.helper';
+import Question from '../../interfaces/question.interface';
 
 const prisma = new PrismaClient();
 const dataDir = join(__dirname, '../..', 'data');
@@ -9,7 +10,7 @@ const fileNames = fs.readdirSync(dataDir);
 const files = fileNames.map((file: string) => ({
   name: file.split('.')[0],
   data: JSON.parse(fs.readFileSync(`${dataDir}/${file}`, 'utf8')),
-}))
+}));
 async function main() {
   const result = Promise.all(
     files.map(async (file) => {
@@ -17,13 +18,13 @@ async function main() {
         data: {
           name: file.name,
           questions: {
-            create: file.data.map((question) => ({
+            create: file.data.map((question: Question) => ({
               content: question.default_size,
               answers: {
                 create: shuffleArray([
                   ...question.incorrects,
                   question.correct,
-                ]).map((answer) => ({
+                ]).map((answer: string) => ({
                   content: answer,
                   isCorrect: answer === question.correct,
                   url: question.url,
