@@ -1,13 +1,41 @@
 import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import * as fs from "fs";
+import {join} from "path";
+import shuffleArray from '../../common/helpers/shuffle-array.helper';
 
+const prisma = new PrismaClient();
+const dataDir = join(__dirname, '../..', 'data');
+const fileNames = fs.readdirSync(dataDir);
+const files = fileNames.map((file: string) => ({
+  name: file.split('.')[0],
+  data: JSON.parse(fs.readFileSync(`${dataDir}/${file}`, 'utf8')),
+}))
 async function main() {
-  await prisma.category.deleteMany();
-//     await prisma.category.create({
-//     data: {
-//       name: 'Category example',
-//     },
-//   });
+  const result = Promise.all(
+    files.map(async (file) => {
+      return await prisma.category.create({
+        data: {
+          name: file.name,
+          questions: {
+            create: file.data.map((question) => ({
+              content: question.default_size,
+              answers: {
+                create: shuffleArray([
+                  ...question.incorrects,
+                  question.correct,
+                ]).map((answer) => ({
+                  content: answer,
+                  isCorrect: answer === question.correct,
+                  url: question.url,
+                })),
+              },
+            })),
+          },
+        },
+      });
+    }),
+  );
+  await result;
 }
 
 main()
