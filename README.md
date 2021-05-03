@@ -49,3 +49,4 @@ $ npm run start:prod
 1. Init orm: yarn prisma init
 2. Format: yarn prisma format
 3. Migrate models to db: yarn prisma db push --preview-feature 
+4. model viewer: yarn prisma studio

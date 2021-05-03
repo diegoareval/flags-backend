@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import { join } from 'path';
 import shuffleArray from '../../common/helpers/shuffle-array.helper';
 import Question from '../../interfaces/question.interface';
+import QuestionFile from "../../interfaces/file.interface"
+
 
 const prisma = new PrismaClient();
 const dataDir = join(__dirname, '../..', 'data');
@@ -13,7 +15,7 @@ const files = fileNames.map((file: string) => ({
 }));
 async function main() {
   const result = Promise.all(
-    files.map(async (file) => {
+    files.map(async (file: QuestionFile) => {
       return await prisma.category.create({
         data: {
           name: file.name,
