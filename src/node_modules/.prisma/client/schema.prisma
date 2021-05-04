@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  name      String
+  questions Question[]
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  content    String
+  answers    Answer[]
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  content    String
+  isCorrect  Boolean  @default(false)
+  url        String
+
+}
