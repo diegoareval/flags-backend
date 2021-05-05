@@ -16,4 +16,13 @@ scalar DateTime
 
 type Query {
   categories: [Category!]!
+  category(id: String!): Category!
+}
+
+type Mutation {
+  createCategory(input: CreateCategoryDto!): Category!
+}
+
+input CreateCategoryDto {
+  name: String!
 }
