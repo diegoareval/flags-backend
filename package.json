@@ -10,7 +10,9 @@
     "prisma",
     "typescript",
     "postgres",
-    "orm"
+    "orm",
+    "graphql",
+    "sql"
   ],
   "scripts": {
     "prebuild": "rimraf dist",
