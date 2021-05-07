@@ -21,8 +21,15 @@ type Query {
 
 type Mutation {
   createCategory(input: CreateCategoryDto!): Category!
+  updateCategory(input: UpdateCategoryDto!): Category!
+  deleteCategory(id: String!): Category!
 }
 
 input CreateCategoryDto {
-  name: String!
+  name: String
+}
+
+input UpdateCategoryDto {
+  name: String
+  id: String
 }

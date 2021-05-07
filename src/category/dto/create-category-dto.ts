@@ -1,7 +1,10 @@
-import {InputType, Field } from "@nestjs/graphql";
+import { InputType, Field } from '@nestjs/graphql';
+import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 @InputType()
 export class CreateCategoryDto {
-@Field()
-name: string
-
+  @IsNotEmpty()
+  @MaxLength(100)
+  @MinLength(5)
+  @Field({ nullable: true })
+  name: string;
 }

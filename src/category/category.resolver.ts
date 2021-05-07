@@ -1,3 +1,4 @@
+import { UpdateCategoryDto } from './dto/update-category-dto';
 import { CreateCategoryDto } from './dto/create-category-dto';
 import { CategoryService } from './category.service';
 import { Category } from './model/category';
@@ -23,5 +24,18 @@ export class CategoryResolver {
     data: CreateCategoryDto,
   ) {
     return await this.categoryService.create(data);
+  }
+
+  @Mutation(() => Category)
+  async updateCategory(
+    @Args({ name: 'input', type: () => UpdateCategoryDto })
+    data: UpdateCategoryDto,
+  ) {
+    return await this.categoryService.update(data);
+  }
+
+  @Mutation(() => Category)
+  async deleteCategory(@Args('id') id: string) {
+    return await this.categoryService.delete(id);
   }
 }
