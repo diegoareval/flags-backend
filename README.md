@@ -50,3 +50,4 @@ $ npm run start:prod
 2. Format: yarn prisma format
 3. Migrate models to db: yarn prisma db push --preview-feature 
 4. model viewer: yarn prisma studio
+5. references to create automatic crud: https://trilon.io/blog/introducing-cli-generators-crud-api-in-1-minute

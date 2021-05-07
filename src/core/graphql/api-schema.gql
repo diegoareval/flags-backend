@@ -14,15 +14,29 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Question {
+  id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  content: String
+  category: Category
+  categoryId: String
+}
+
 type Query {
   categories: [Category!]!
   category(id: String!): Category!
+  questions: [Question!]!
+  question(id: String!): Question!
 }
 
 type Mutation {
   createCategory(input: CreateCategoryDto!): Category!
   updateCategory(input: UpdateCategoryDto!): Category!
   deleteCategory(id: String!): Category!
+  createQuestion(input: CreateQuestionDTO!): Question!
+  updateQuestion(input: UpdateQuestionDTO!): Question!
+  deleteQuestion(id: String!): Question!
 }
 
 input CreateCategoryDto {
@@ -32,4 +46,15 @@ input CreateCategoryDto {
 input UpdateCategoryDto {
   name: String
   id: String
+}
+
+input CreateQuestionDTO {
+  content: String!
+  categoryId: String!
+}
+
+input UpdateQuestionDTO {
+  content: String
+  categoryId: String
+  id: String!
 }

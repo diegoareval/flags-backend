@@ -9,7 +9,7 @@ export class CategoryService {
   constructor(private readonly prismaService: PrismaService) {}
   async getMany() {
     return await this.prismaService.category.findMany({
-      include: { questions: { include: { answers: true } } },
+      include: { questions: true },
     });
   }
   async get(id: string) {
@@ -25,7 +25,7 @@ export class CategoryService {
   async create(data: CreateCategoryDto) {
     return await this.prismaService.category.create({
       data,
-      include: { questions: { include: { answers: true } } },
+      include: { questions: true },
     });
   }
   async update(data: UpdateCategoryDto) {
